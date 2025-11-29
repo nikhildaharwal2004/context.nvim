@@ -26,7 +26,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 {
-  dir = "ahkohd/context.nvim",
+  "ahkohd/context.nvim",
   config = function()
     require("context").setup()
   end,
@@ -37,8 +37,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 return {
-  dir = "ahkohd/context.nvim",
-  name = "context",
+  "ahkohd/context.nvim",
   config = function()
     local context = require("context")
     context.setup({
