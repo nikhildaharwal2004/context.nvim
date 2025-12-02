@@ -54,7 +54,13 @@ local function get_selection_range()
 		start_col, end_col = end_col, start_col
 	end
 
-	return { start_row = start_row, start_col = start_col, end_row = end_row, end_col = end_col }
+	return {
+		mode = mode,
+		start_row = start_row,
+		start_col = start_col,
+		end_row = end_row,
+		end_col = end_col,
+	}
 end
 
 local function format_position(file, range)
@@ -100,14 +106,22 @@ function M.selection()
 		return nil
 	end
 
-	if #lines == 1 then
-		lines[1] = lines[1]:sub(range.start_col, range.end_col)
+	if range.mode == "V" then
+		return table.concat(lines, "\n")
+	elseif range.mode == "\22" then
+		for i, line in ipairs(lines) do
+			lines[i] = line:sub(range.start_col, range.end_col)
+		end
+		return table.concat(lines, "\n")
 	else
-		lines[1] = lines[1]:sub(range.start_col)
-		lines[#lines] = lines[#lines]:sub(1, range.end_col)
+		if #lines == 1 then
+			lines[1] = lines[1]:sub(range.start_col, range.end_col)
+		else
+			lines[1] = lines[1]:sub(range.start_col)
+			lines[#lines] = lines[#lines]:sub(1, range.end_col)
+		end
+		return table.concat(lines, "\n")
 	end
-
-	return table.concat(lines, "\n")
 end
 
 local function format_diagnostic(d, bufnr)
